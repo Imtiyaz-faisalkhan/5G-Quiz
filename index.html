@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>5G Quiz Game</title>
   <style>
     body {
-       background-color: #007BFF;
+      background-color: #007BFF;
+      color: white;
       font-family: Arial, sans-serif;
       max-width: 600px;
       margin: auto;
@@ -12,7 +15,34 @@
     }
     h1 { text-align: center; }
     .question { margin-bottom: 20px; }
-    button { padding: 10px 20px; font-size: 16px; }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: white;
+      color: #007BFF;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e6e6e6;
+    }
+    .feedback {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    .result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+    }
   </style>
 </head>
 <body>
@@ -34,23 +64,66 @@
       <label>4. Does 5G reduce latency?</label><br>
       <input type="text" name="q4">
     </div>
+    <div class="question">
+      <label>5. What is one potential use case of 5G technology?</label><br>
+      <input type="text" name="q5">
+    </div>
     <button type="submit">Submit</button>
   </form>
 
-  <div id="result" style="margin-top: 20px; font-weight: bold;"></div>
+  <div id="feedback" class="feedback"></div>
+  <div id="result" class="result"></div>
 
   <script>
     document.getElementById('quizForm').onsubmit = function(event) {
       event.preventDefault();
       const answers = Object.fromEntries(new FormData(this));
       let score = 0;
+      let feedback = '';
 
-      if (answers.q1.toLowerCase().includes("generation")) score++;
-      if (answers.q2.toLowerCase().includes("latency") || answers.q2.toLowerCase().includes("speed")) score++;
-      if (answers.q3.toLowerCase().includes("mmwave") || answers.q3.toLowerCase().includes("high")) score++;
-      if (answers.q4.toLowerCase().includes("yes")) score++;
+      // Question 1 - What does 5G stand for?
+      if (answers.q1.toLowerCase().includes("generation")) {
+        score++;
+        feedback += "Q1: Correct! 5G stands for '5th Generation'.<br>";
+      } else {
+        feedback += "Q1: Incorrect. 5G stands for '5th Generation'.<br>";
+      }
 
-      document.getElementById("result").innerText = `You scored ${score}/4.`;
+      // Question 2 - Key benefit of 5G over 4G
+      if (answers.q2.toLowerCase().includes("speed") || answers.q2.toLowerCase().includes("latency")) {
+        score++;
+        feedback += "Q2: Correct! 5G is faster and reduces latency compared to 4G.<br>";
+      } else {
+        feedback += "Q2: Incorrect. 5G is faster and reduces latency compared to 4G.<br>";
+      }
+
+      // Question 3 - Frequency band used in 5G
+      if (answers.q3.toLowerCase().includes("mmwave") || answers.q3.toLowerCase().includes("high")) {
+        score++;
+        feedback += "Q3: Correct! 'mmWave' and 'high-band' are frequency bands used in 5G.<br>";
+      } else {
+        feedback += "Q3: Incorrect. 'mmWave' and 'high-band' are frequency bands used in 5G.<br>";
+      }
+
+      // Question 4 - Does 5G reduce latency?
+      if (answers.q4.toLowerCase().includes("yes")) {
+        score++;
+        feedback += "Q4: Correct! 5G indeed reduces latency.<br>";
+      } else {
+        feedback += "Q4: Incorrect. 5G reduces latency significantly.<br>";
+      }
+
+      // Question 5 - Potential use case of 5G
+      if (answers.q5.toLowerCase().includes("smart cities") || answers.q5.toLowerCase().includes("iot")) {
+        score++;
+        feedback += "Q5: Correct! Smart cities and IoT are common use cases for 5G.<br>";
+      } else {
+        feedback += "Q5: Incorrect. Smart cities and IoT are common use cases for 5G.<br>";
+      }
+
+      // Display feedback and final score
+      document.getElementById("feedback").innerHTML = feedback;
+      document.getElementById("result").innerText = `You scored ${score}/5.`;
     };
   </script>
 </body>
