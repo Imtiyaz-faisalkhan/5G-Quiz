@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>5G Quiz Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+    h1 { text-align: center; }
+    .question { margin-bottom: 20px; }
+    button { padding: 10px 20px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h1>5G Technology Quiz</h1>
+  <form id="quizForm">
+    <div class="question">
+      <label>1. What does 5G stand for?</label><br>
+      <input type="text" name="q1">
+    </div>
+    <div class="question">
+      <label>2. What is the key benefit of 5G over 4G?</label><br>
+      <input type="text" name="q2">
+    </div>
+    <div class="question">
+      <label>3. Name one frequency band used in 5G?</label><br>
+      <input type="text" name="q3">
+    </div>
+    <div class="question">
+      <label>4. Does 5G reduce latency?</label><br>
+      <input type="text" name="q4">
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="result" style="margin-top: 20px; font-weight: bold;"></div>
+
+  <script>
+    document.getElementById('quizForm').onsubmit = function(event) {
+      event.preventDefault();
+      const answers = Object.fromEntries(new FormData(this));
+      let score = 0;
+
+      if (answers.q1.toLowerCase().includes("generation")) score++;
+      if (answers.q2.toLowerCase().includes("latency") || answers.q2.toLowerCase().includes("speed")) score++;
+      if (answers.q3.toLowerCase().includes("mmwave") || answers.q3.toLowerCase().includes("high")) score++;
+      if (answers.q4.toLowerCase().includes("yes")) score++;
+
+      document.getElementById("result").innerText = `You scored ${score}/4.`;
+    };
+  </script>
+</body>
+</html>
